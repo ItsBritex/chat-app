@@ -21,7 +21,7 @@ const friendName = document.getElementById('friend-name');
 const chatMessages = document.getElementById('chat-messages');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
-const backButton = document.getElementById('back-icon');
+const backButton = document.getElementById('back-to-chats');
 
 // Variables globales
 let currentUser = null;

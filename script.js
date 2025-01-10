@@ -52,40 +52,40 @@ const firebaseConfig = {
   }
   
   // Función para buscar amigos
-  function searchFriends() {
-      const searchTerm = friendSearch.value.trim().toLowerCase();
-      friendList.innerHTML = '';
+function searchFriends() {
+    const searchTerm = friendSearch.value.trim().toLowerCase();  // Convertir a minúsculas
+    friendList.innerHTML = '';
   
-      if (searchTerm.length === 0) {
-          return;
-      }
+    if (searchTerm.length === 0) {
+        return;
+    }
   
-      db.collection('users')
-          .orderBy('username')
-          .startAt(searchTerm)
-          .endAt(searchTerm + '\uf8ff')
-          .limit(10)
-          .get()
-          .then((snapshot) => {
-              snapshot.forEach((doc) => {
-                  const userData = doc.data();
-                  if (doc.id !== currentUser.uid) {
-                      const li = document.createElement('li');
-                      li.textContent = `@${userData.username}`;
-                      li.addEventListener('click', () => startChat(doc.id, userData.username));
-                      friendList.appendChild(li);
-                  }
-              });
-              if (friendList.children.length === 0) {
-                  const li = document.createElement('li');
-                  li.textContent = 'No se encontraron usuarios';
-                  friendList.appendChild(li);
-              }
-          })
-          .catch(error => {
-              console.error("Error al buscar usuarios:", error);
-          });
-  }
+    db.collection('users')
+        .orderBy('username')
+        .startAt(searchTerm)
+        .endAt(searchTerm + '\uf8ff')
+        .limit(10)
+        .get()
+        .then((snapshot) => {
+            snapshot.forEach((doc) => {
+                const userData = doc.data();
+                if (doc.id !== currentUser.uid) {
+                    const li = document.createElement('li');
+                    li.textContent = `@${userData.username}`;
+                    li.addEventListener('click', () => startChat(doc.id, userData.username));
+                    friendList.appendChild(li);
+                }
+            });
+            if (friendList.children.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'No se encontraron usuarios';
+                friendList.appendChild(li);
+            }
+        })
+        .catch(error => {
+            console.error("Error al buscar usuarios:", error);
+        });
+}
   
   // Función para iniciar chat
   function startChat(friendId, friendUsername) {
@@ -104,31 +104,31 @@ const firebaseConfig = {
   }
   
   // Función para cambiar el nombre de usuario
-  function changeUsername() {
-      const newUsername = newUsernameInput.value.trim();
-      if (newUsername && newUsername !== currentUser.username) {
-          db.collection('users').where('username', '==', newUsername).get()
-              .then((snapshot) => {
-                  if (snapshot.empty) {
-                      return db.collection('users').doc(currentUser.uid).update({
-                          username: newUsername
-                      });
-                  } else {
-                      throw new Error('El nombre de usuario ya existe');
-                  }
-              })
-              .then(() => {
-                  userNameSpan.textContent = `@${newUsername}`;
-                  currentUser.username = newUsername;
-                  newUsernameInput.style.display = 'none';
-                  saveUsernameButton.style.display = 'none';
-                  userNameSpan.style.display = 'inline-block';
-              })
-              .catch((error) => {
-                  alert(error.message);
-              });
-      }
-  }
+function changeUsername() {
+    let newUsername = newUsernameInput.value.trim().toLowerCase();  // Convertir a minúsculas
+    if (newUsername && newUsername !== currentUser.username) {
+        db.collection('users').where('username', '==', newUsername).get()
+            .then((snapshot) => {
+                if (snapshot.empty) {
+                    return db.collection('users').doc(currentUser.uid).update({
+                        username: newUsername
+                    });
+                } else {
+                    throw new Error('El nombre de usuario ya existe');
+                }
+            })
+            .then(() => {
+                userNameSpan.textContent = `@${newUsername}`;
+                currentUser.username = newUsername;
+                newUsernameInput.style.display = 'none';
+                saveUsernameButton.style.display = 'none';
+                userNameSpan.style.display = 'inline-block';
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    }
+}
   
   // Función debounce para evitar múltiples llamadas a la base de datos
   function debounce(func, delay) {
@@ -157,7 +157,7 @@ auth.onAuthStateChanged((user) => {
                 document.title = `${currentUser.username} Nul`; // Aquí se cambia el título
             } else {
                 // Si no tiene un nombre de usuario, crear uno basado en su displayName
-                const username = user.displayName.toLowerCase().replace(/\s+/g, '_');
+                const username = user.displayName.toLowerCase().replace(/\s+/g, '_');  // Convertir a minúsculas
                 db.collection('users').doc(user.uid).set({
                     username: username,
                     email: user.email
@@ -182,6 +182,3 @@ auth.onAuthStateChanged((user) => {
         friendList.innerHTML = '';
     }
 });
-
-  
-  
