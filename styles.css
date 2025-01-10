@@ -82,16 +82,25 @@ input[type="text"] {
     padding: 5px 10px;
     border-radius: 4px;
     max-width: 70%;
+    clear: both;
 }
 
-.sent {
+.message.sent {
     background-color: #dcf8c6;
-    align-self: flex-end;
-    margin-left: auto;
+    float: right;
 }
 
-.received {
+.message.received {
     background-color: #f4f4f4;
-    align-self: flex-start;
+    float: left;
+}
+
+#message-form {
+    display: flex;
+    gap: 10px;
+}
+
+#message-input {
+    flex-grow: 1;
 }
 

@@ -1,4 +1,4 @@
-// Firebase configuration
+// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
     authDomain: "chat-app-ccc84.firebaseapp.com",
@@ -9,14 +9,14 @@ const firebaseConfig = {
     measurementId: "G-3X6LV0DT7P"
   };
   
-  // Initialize Firebase
+  // Inicializar Firebase
   firebase.initializeApp(firebaseConfig);
   
-  // Get references to Firebase services
+  // Obtener referencias a los servicios de Firebase
   const auth = firebase.auth();
   const db = firebase.firestore();
   
-  // DOM elements
+  // Elementos del DOM
   const loginButton = document.getElementById('login-button');
   const logoutButton = document.getElementById('logout-button');
   const userSection = document.getElementById('user-section');
@@ -29,7 +29,7 @@ const firebaseConfig = {
   const messageInput = document.getElementById('message-input');
   const sendButton = document.getElementById('send-button');
   
-  // Global variables
+  // Variables globales
   let currentUser = null;
   let currentChat = null;
   
@@ -39,18 +39,18 @@ const firebaseConfig = {
   friendSearch.addEventListener('input', searchFriends);
   sendButton.addEventListener('click', sendMessage);
   
-  // Sign in with Google
+  // Iniciar sesión con Google
   function signInWithGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider);
   }
   
-  // Sign out
+  // Cerrar sesión
   function signOut() {
       auth.signOut();
   }
   
-  // Search friends
+  // Buscar amigos
   function searchFriends() {
       const searchTerm = friendSearch.value.toLowerCase();
       db.collection('users').get().then((snapshot) => {
@@ -67,7 +67,7 @@ const firebaseConfig = {
       });
   }
   
-  // Start chat
+  // Iniciar chat
   function startChat(friendId, friendName) {
       currentChat = friendId;
       chatFriendName.textContent = friendName;
@@ -75,7 +75,7 @@ const firebaseConfig = {
       loadMessages(friendId);
   }
   
-  // Load messages
+  // Cargar mensajes
   function loadMessages(friendId) {
       chatMessages.innerHTML = '';
       db.collection('messages')
@@ -93,7 +93,7 @@ const firebaseConfig = {
           });
   }
   
-  // Display message
+  // Mostrar mensaje
   function displayMessage(message) {
       const messageElement = document.createElement('div');
       messageElement.classList.add('message');
@@ -103,7 +103,7 @@ const firebaseConfig = {
       chatMessages.scrollTop = chatMessages.scrollHeight;
   }
   
-  // Send message
+  // Enviar mensaje
   function sendMessage() {
       const messageText = messageInput.value.trim();
       if (messageText && currentChat) {
@@ -117,7 +117,7 @@ const firebaseConfig = {
       }
   }
   
-  // Auth state change listener
+  // Listener para cambios en el estado de autenticación
   auth.onAuthStateChanged((user) => {
       if (user) {
           currentUser = user;

@@ -1,31 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Chat App</title>
+    <title>Chat Minimalista</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="app">
         <header>
-            <h1>Minimalist Chat</h1>
+            <h1>Chat Minimalista</h1>
         </header>
         <main>
             <div id="auth-section">
-                <button id="login-button">Login with Google</button>
-                <button id="logout-button" style="display: none;">Logout</button>
+                <button id="login-button">Iniciar sesión con Google</button>
+                <button id="logout-button" style="display: none;">Cerrar sesión</button>
             </div>
             <div id="user-section" style="display: none;">
-                <p>Welcome, <span id="user-name"></span></p>
-                <input type="text" id="friend-search" placeholder="Search friends by name">
+                <p>Bienvenido, <span id="user-name"></span></p>
+                <input type="text" id="friend-search" placeholder="Buscar amigos por nombre">
                 <ul id="friend-list"></ul>
             </div>
             <div id="chat-section" style="display: none;">
-                <h2>Chat with <span id="chat-friend-name"></span></h2>
+                <h2>Chat con <span id="chat-friend-name"></span></h2>
                 <div id="chat-messages"></div>
-                <input type="text" id="message-input" placeholder="Type a message...">
-                <button id="send-button">Send</button>
+                <div id="message-form">
+                    <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+                    <button id="send-button">Enviar</button>
+                </div>
             </div>
         </main>
     </div>
@@ -35,4 +37,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
