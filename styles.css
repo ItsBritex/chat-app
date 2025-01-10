@@ -2,7 +2,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #0000;
 }
 
 #app {
@@ -23,7 +23,7 @@ h1 {
 }
 
 main {
-    background-color: #fff;
+    background-color: #0000;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
