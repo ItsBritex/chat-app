@@ -36,21 +36,29 @@ const firebaseConfig = {
       e.preventDefault();
       const messageText = messageInput.value.trim();
       if (messageText && currentChat && currentUser) {
+          console.log('Intentando enviar mensaje:', messageText);
+          console.log('Usuario actual:', currentUser.uid);
+          console.log('Destinatario:', currentChat.id);
+  
           db.collection('messages').add({
               sender: currentUser.uid,
               receiver: currentChat.id,
               text: messageText,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+              time: firebase.firestore.FieldValue.serverTimestamp()
           }).then(() => {
+              console.log('Mensaje enviado con éxito');
               messageInput.value = '';
           }).catch(error => {
               console.error("Error al enviar el mensaje:", error);
           });
+      } else {
+          console.error('No se puede enviar el mensaje. Datos faltantes:', { messageText, currentChat, currentUser });
       }
   }
   
   // Función para mostrar mensajes
   function displayMessage(message) {
+      console.log('Mostrando mensaje:', message);
       const messageElement = document.createElement('div');
       messageElement.classList.add('message');
       messageElement.classList.add(message.sender === currentUser.uid ? 'sent' : 'received');
@@ -62,38 +70,49 @@ const firebaseConfig = {
   // Función para cargar mensajes
   function loadMessages() {
       if (currentUser && currentChat) {
+          console.log('Cargando mensajes para:', currentUser.uid, currentChat.id);
           db.collection('messages')
               .where('sender', 'in', [currentUser.uid, currentChat.id])
               .where('receiver', 'in', [currentUser.uid, currentChat.id])
-              .orderBy('timestamp')
+              .orderBy('time')
               .onSnapshot((snapshot) => {
+                  console.log('Snapshot recibido:', snapshot.size, 'mensajes');
                   snapshot.docChanges().forEach((change) => {
                       if (change.type === 'added') {
+                          console.log('Nuevo mensaje:', change.doc.data());
                           displayMessage(change.doc.data());
                       }
                   });
               }, (error) => {
                   console.error("Error al cargar los mensajes:", error);
               });
+      } else {
+          console.error('No se pueden cargar los mensajes. Datos faltantes:', { currentUser, currentChat });
       }
   }
   
   // Listener para cambios en el estado de autenticación
   auth.onAuthStateChanged((user) => {
       if (user) {
+          console.log('Usuario autenticado:', user.uid);
           currentUser = user;
           // Obtener información del amigo del almacenamiento local
           const storedFriend = JSON.parse(localStorage.getItem('currentChatFriend'));
           if (storedFriend) {
+              console.log('Amigo del chat:', storedFriend);
               currentChat = storedFriend;
               friendName.textContent = `@${currentChat.username}`;
               loadMessages();
           } else {
+              console.error('No hay información del amigo en el almacenamiento local');
               // Si no hay información del amigo, volver a la página principal
               window.location.href = 'index.html';
           }
       } else {
+          console.log('No hay usuario autenticado');
           // Si no hay usuario autenticado, volver a la página principal
           window.location.href = 'index.html';
       }
-  });  
+  });
+  
+  
