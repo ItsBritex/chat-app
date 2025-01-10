@@ -30,6 +30,13 @@ const firebaseConfig = {
   // Event listeners
   messageForm.addEventListener('submit', sendMessage);
   backButton.addEventListener('click', () => window.location.href = 'index.html');
+
+document.addEventListener('DOMContentLoaded', () => {
+    const friendNameElement = document.getElementById('friend-name');
+    const friendName = friendNameElement.textContent.trim();
+    // Actualiza el título de la página con el nombre del amigo
+    document.title = `Chat con ${friendName}`;
+});
   
   // Función para enviar mensajes
   function sendMessage(e) {
