@@ -89,6 +89,7 @@ const firebaseConfig = {
   
   // Función para iniciar chat
   function startChat(friendId, friendUsername) {
+      console.log('Iniciando chat con:', friendId, friendUsername);
       localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, username: friendUsername }));
       window.location.href = 'chat.html';
   }
@@ -141,6 +142,7 @@ const firebaseConfig = {
   // Listener para cambios en el estado de autenticación
   auth.onAuthStateChanged((user) => {
       if (user) {
+          console.log('Usuario autenticado en script.js:', user.uid);
           currentUser = user;
           loginButton.style.display = 'none';
           logoutButton.style.display = 'inline-block';
@@ -151,18 +153,26 @@ const firebaseConfig = {
               if (doc.exists && doc.data().username) {
                   currentUser.username = doc.data().username;
                   userNameSpan.textContent = `@${currentUser.username}`;
+                  console.log('Nombre de usuario existente:', currentUser.username);
               } else {
                   // Si no tiene un nombre de usuario, crear uno basado en su displayName
                   const username = user.displayName.toLowerCase().replace(/\s+/g, '_');
                   db.collection('users').doc(user.uid).set({
                       username: username,
                       email: user.email
-                  }, { merge: true });
-                  currentUser.username = username;
-                  userNameSpan.textContent = `@${username}`;
+                  }, { merge: true }).then(() => {
+                      console.log('Nuevo nombre de usuario creado:', username);
+                      currentUser.username = username;
+                      userNameSpan.textContent = `@${username}`;
+                  }).catch((error) => {
+                      console.error('Error al crear el nombre de usuario:', error);
+                  });
               }
+          }).catch((error) => {
+              console.error('Error al obtener el documento del usuario:', error);
           });
       } else {
+          console.log('No hay usuario autenticado en script.js');
           currentUser = null;
           loginButton.style.display = 'inline-block';
           logoutButton.style.display = 'none';

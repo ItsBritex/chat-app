@@ -115,4 +115,14 @@ const firebaseConfig = {
       }
   });
   
+  // Verificar el estado de autenticación al cargar la página
+  auth.onAuthStateChanged((user) => {
+      if (user) {
+          console.log('Usuario autenticado al cargar la página:', user.uid);
+      } else {
+          console.log('No hay usuario autenticado al cargar la página');
+          window.location.href = 'index.html';
+      }
+  });
+  
   
