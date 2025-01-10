@@ -20,7 +20,9 @@ const firebaseConfig = {
   const loginButton = document.getElementById('login-button');
   const logoutButton = document.getElementById('logout-button');
   const userSection = document.getElementById('user-section');
-  const userName = document.getElementById('user-name');
+  const userNameSpan = document.getElementById('user-name');
+  const newUsernameInput = document.getElementById('new-username');
+  const saveUsernameButton = document.getElementById('save-username');
   const friendSearch = document.getElementById('friend-search');
   const friendList = document.getElementById('friend-list');
   
@@ -31,6 +33,8 @@ const firebaseConfig = {
   loginButton.addEventListener('click', signInWithGoogle);
   logoutButton.addEventListener('click', signOut);
   friendSearch.addEventListener('input', debounce(searchFriends, 300));
+  userNameSpan.addEventListener('click', showUsernameInput);
+  saveUsernameButton.addEventListener('click', changeUsername);
   
   // Función para iniciar sesión con Google
   function signInWithGoogle() {
@@ -57,7 +61,7 @@ const firebaseConfig = {
       }
   
       db.collection('users')
-          .orderBy('nameLower')
+          .orderBy('username')
           .startAt(searchTerm)
           .endAt(searchTerm + '\uf8ff')
           .limit(10)
@@ -67,8 +71,8 @@ const firebaseConfig = {
                   const userData = doc.data();
                   if (doc.id !== currentUser.uid) {
                       const li = document.createElement('li');
-                      li.textContent = userData.name;
-                      li.addEventListener('click', () => startChat(doc.id, userData.name));
+                      li.textContent = `@${userData.username}`;
+                      li.addEventListener('click', () => startChat(doc.id, userData.username));
                       friendList.appendChild(li);
                   }
               });
@@ -84,9 +88,45 @@ const firebaseConfig = {
   }
   
   // Función para iniciar chat
-  function startChat(friendId, friendName) {
-      localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, name: friendName }));
+  function startChat(friendId, friendUsername) {
+      localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, username: friendUsername }));
       window.location.href = 'chat.html';
+  }
+  
+  // Función para mostrar el input de cambio de nombre de usuario
+  function showUsernameInput() {
+      userNameSpan.style.display = 'none';
+      newUsernameInput.style.display = 'inline-block';
+      saveUsernameButton.style.display = 'inline-block';
+      newUsernameInput.value = userNameSpan.textContent.slice(1); // Eliminar el @
+      newUsernameInput.focus();
+  }
+  
+  // Función para cambiar el nombre de usuario
+  function changeUsername() {
+      const newUsername = newUsernameInput.value.trim();
+      if (newUsername && newUsername !== currentUser.username) {
+          db.collection('users').where('username', '==', newUsername).get()
+              .then((snapshot) => {
+                  if (snapshot.empty) {
+                      return db.collection('users').doc(currentUser.uid).update({
+                          username: newUsername
+                      });
+                  } else {
+                      throw new Error('El nombre de usuario ya existe');
+                  }
+              })
+              .then(() => {
+                  userNameSpan.textContent = `@${newUsername}`;
+                  currentUser.username = newUsername;
+                  newUsernameInput.style.display = 'none';
+                  saveUsernameButton.style.display = 'none';
+                  userNameSpan.style.display = 'inline-block';
+              })
+              .catch((error) => {
+                  alert(error.message);
+              });
+      }
   }
   
   // Función debounce para evitar múltiples llamadas a la base de datos
@@ -105,14 +145,23 @@ const firebaseConfig = {
           loginButton.style.display = 'none';
           logoutButton.style.display = 'inline-block';
           userSection.style.display = 'block';
-          userName.textContent = user.displayName;
   
-          // Guardar o actualizar la información del usuario en Firestore
-          db.collection('users').doc(user.uid).set({
-              name: user.displayName,
-              email: user.email,
-              nameLower: user.displayName.toLowerCase()
-          }, { merge: true });
+          // Verificar si el usuario ya tiene un nombre de usuario
+          db.collection('users').doc(user.uid).get().then((doc) => {
+              if (doc.exists && doc.data().username) {
+                  currentUser.username = doc.data().username;
+                  userNameSpan.textContent = `@${currentUser.username}`;
+              } else {
+                  // Si no tiene un nombre de usuario, crear uno basado en su displayName
+                  const username = user.displayName.toLowerCase().replace(/\s+/g, '_');
+                  db.collection('users').doc(user.uid).set({
+                      username: username,
+                      email: user.email
+                  }, { merge: true });
+                  currentUser.username = username;
+                  userNameSpan.textContent = `@${username}`;
+              }
+          });
       } else {
           currentUser = null;
           loginButton.style.display = 'inline-block';

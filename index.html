@@ -17,17 +17,11 @@
                 <button id="logout-button" style="display: none;">Cerrar sesión</button>
             </div>
             <div id="user-section" style="display: none;">
-                <p>Bienvenido, <span id="user-name"></span></p>
-                <input type="text" id="friend-search" placeholder="Buscar amigos por nombre">
+                <p>Bienvenido, <span id="user-name" class="editable"></span></p>
+                <input type="text" id="new-username" placeholder="Nuevo nombre de usuario" style="display: none;">
+                <button id="save-username" style="display: none;">Guardar</button>
+                <input type="text" id="friend-search" placeholder="Buscar amigos por @nombre">
                 <ul id="friend-list"></ul>
-            </div>
-            <div id="chat-section" style="display: none;">
-                <h2>Chat con <span id="chat-friend-name"></span></h2>
-                <div id="chat-messages"></div>
-                <div id="message-form">
-                    <input type="text" id="message-input" placeholder="Escribe un mensaje...">
-                    <button id="send-button">Enviar</button>
-                </div>
             </div>
         </main>
     </div>
@@ -37,3 +31,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+

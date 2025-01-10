@@ -86,7 +86,7 @@ const firebaseConfig = {
           const storedFriend = JSON.parse(localStorage.getItem('currentChatFriend'));
           if (storedFriend) {
               currentChat = storedFriend;
-              friendName.textContent = currentChat.name;
+              friendName.textContent = `@${currentChat.username}`;
               loadMessages();
           } else {
               // Si no hay información del amigo, volver a la página principal
@@ -96,6 +96,4 @@ const firebaseConfig = {
           // Si no hay usuario autenticado, volver a la página principal
           window.location.href = 'index.html';
       }
-  });
-  
-  
+  });  
