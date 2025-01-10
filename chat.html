@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="chat.css">
+    <title></title>
 </head>
 <body>
     <div id="chat-container">
@@ -14,8 +15,9 @@
         </div>
         <div id="chat-messages"></div>
         <form id="message-form">
-            <input type="text" id="message-input" placeholder="Escribe un mensaje..." required>
-            <button type="submit" style="display: none;">Enviar</button> <!-- El botón está inicialmente oculto -->
+            <button id="add-button" type="button"></button>
+            <input id="message-input" type="text" placeholder="Escribe un mensaje...">
+            <button type="submit">Enviar</button>
         </form>
     </div>
 
