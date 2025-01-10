@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=send" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="chat.css">
@@ -11,22 +12,23 @@
     <div id="chat-container">
         <div id="chat-header">
             <div id="back-to-chats">
-                <img src="./assets/arrow.png" alt="Back" id="back-icon">
+                <span class="material-symbols-outlined">arrow_back</span>
                 <span>Chats</span>
             </div>            
             <div id="friend-info">
                 <img src="./assets/pfp-placeholder.png" alt="PFP" id="friend-pfp">
                 <span id="friend-name">Britex</span>
             </div>
-            <img src="./assets/Mesa de trabajo 1.png" alt="Options" id="options-icon">
+            <span class="material-symbols-outlined">send</span>
         </div>
         <div id="chat-messages"></div>
         <form id="message-form">
             <button id="add-button" type="button">+</button>
             <input id="message-input" type="text" placeholder="Escribe un mensaje...">
-            <button type="submit">Enviar</button>
+            <button id="send-button" type="submit" style="display: none;">Enviar</button>
         </form>
-    </div>    
+    </div>
+    
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>

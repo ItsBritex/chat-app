@@ -2,134 +2,6 @@
     --secondary: #7e7e7e;
     --secondary-hover: red;
     --main: #000;
-}
-
-/* Estilos generales para el contenedor del formulario */
-#message-form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-top: 1px solid  var(--secondary);
-    background-color: var(--main);
-}
-
-/* Estilo para el input de mensaje */
-#message-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid var(--secondary);
-    border-radius: 20px;
-    font-size: 16px;
-    outline: none;
-}
-
-/* Estilo para el botón de enviar */
-button[type="submit"] {
-    background-color: var(--secondary);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: var(--secondary-hover);
-}
-
-/* Estilo para el icono de "+" */
-#add-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    background-color: transparent;
-    cursor: pointer;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-#add-button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-color: #888;
-}
-
-/* Icono de "+" centrado */
-#add-button::before {
-    content: "+";
-    font-size: 24px;
-    font-weight: bold;
-    color: #888;
-    line-height: 1;
-}
-
-/* Estilo para el contenedor del botón "Back to Chats" */
-#back-to-chats {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-    background-color: var(--main);
-    color: var(--secondary);
-    cursor: pointer;
-    transition: color 0.3s ease, background-color 0.3s ease;
-}
-
-#back-to-chats:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--secondary-hover);
-}
-
-/* Icono de flecha */
-#back-icon {
-    width: 20px;
-    height: 20px;
-    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
-    transition: filter 0.3s ease;
-}
-
-#back-to-chats:hover #back-icon {
-    filter: invert(100%) sepia(30%) saturate(200%) hue-rotate(0deg) brightness(120%) contrast(100%);
-}
-
-/* Texto "Chats" */
-#back-to-chats span {
-    font-size: 16px;
-    font-weight: bold;
-    color: inherit; /* Hereda el color del contenedor */
-}
-
-#back-friend {
-    color: white;
-}
-
-/* Ajustes para móviles */
-@media (max-width: 600px) {
-    #message-form {
-        flex-wrap: nowrap;
-        gap: 5px;
-    }
-
-    #message-input {
-        font-size: 14px;
-    }
-
-    button[type="submit"],
-    #add-button {
-        width: 35px;
-        height: 35px;
-        font-size: 14px;
-    }
-}
-
-:root {
-    --secondary: #7e7e7e;
-    --secondary-hover: red;
-    --main: #000;
     --text-color: #fff;
 }
 
@@ -138,7 +10,7 @@ button[type="submit"]:hover {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow: hidden; /* Evita el scroll innecesario */
+    overflow: hidden; /* Evita scroll innecesario */
 }
 
 /* Cabecera del chat */
@@ -152,7 +24,6 @@ button[type="submit"]:hover {
     color: var(--text-color);
 }
 
-/* Botón de regresar */
 #back-to-chats {
     display: flex;
     align-items: center;
@@ -165,7 +36,6 @@ button[type="submit"]:hover {
     height: 20px;
 }
 
-/* Información del amigo */
 #friend-info {
     display: flex;
     align-items: center;
@@ -186,7 +56,6 @@ button[type="submit"]:hover {
     color: var(--text-color);
 }
 
-/* Icono de opciones */
 #options-icon {
     width: 20px;
     height: 20px;
@@ -201,11 +70,14 @@ button[type="submit"]:hover {
 
 /* Mensajes del chat */
 #chat-messages {
-    flex: 1; /* Expande el contenido */
+    flex: 1;
     overflow-y: auto;
     padding: 20px;
-    background-color: var(--main);
     color: var(--text-color);
+    background: none; /* Sin fondo */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 /* Formulario */
@@ -216,9 +88,9 @@ button[type="submit"]:hover {
     padding: 10px;
     border-top: 1px solid var(--secondary);
     background-color: var(--main);
+    transition: all 0.3s ease;
 }
 
-/* Input */
 #message-input {
     flex: 1;
     padding: 10px;
@@ -228,9 +100,9 @@ button[type="submit"]:hover {
     outline: none;
     background-color: var(--main);
     color: var(--text-color);
+    transition: flex 0.3s ease; /* Animación de tamaño */
 }
 
-/* Botón de "+" */
 #add-button {
     background: none;
     color: var(--secondary);
@@ -239,18 +111,18 @@ button[type="submit"]:hover {
     cursor: pointer;
 }
 
-/* Botón de enviar */
-button[type="submit"] {
+#send-button {
     background-color: var(--secondary);
     color: white;
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: opacity 0.3s ease; /* Animación de aparición */
 }
 
-button[type="submit"]:hover {
+#send-button:hover {
     background-color: var(--secondary-hover);
 }
 
@@ -277,8 +149,7 @@ button[type="submit"]:hover {
         font-size: 14px;
     }
 
-    button[type="submit"],
-    #add-button {
-        font-size: 16px;
+    #send-button {
+        font-size: 14px;
     }
 }
