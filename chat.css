@@ -1,18 +1,24 @@
+:root {
+    --secondary: #7e7e7e;
+    --secondary-hover: red;
+    --main: #000;
+}
+
 /* Estilos generales para el contenedor del formulario */
 #message-form {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 10px;
-    border-top: 1px solid #ccc;
-    background-color: #f9f9f9;
+    border-top: 1px solid  var(--secondary);
+    background-color: var(--main);
 }
 
 /* Estilo para el input de mensaje */
 #message-input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--secondary);
     border-radius: 20px;
     font-size: 16px;
     outline: none;
@@ -20,7 +26,7 @@
 
 /* Estilo para el botón de enviar */
 button[type="submit"] {
-    background-color: #007bff;
+    background-color: var(--secondary);
     color: white;
     border: none;
     border-radius: 20px;
@@ -30,7 +36,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-hover);
 }
 
 /* Estilo para el icono de "+" */
@@ -59,6 +65,46 @@ button[type="submit"]:hover {
     font-weight: bold;
     color: #888;
     line-height: 1;
+}
+
+/* Estilo para el contenedor del botón "Back to Chats" */
+#back-to-chats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: var(--main);
+    color: var(--secondary);
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#back-to-chats:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--secondary-hover);
+}
+
+/* Icono de flecha */
+#back-icon {
+    width: 20px;
+    height: 20px;
+    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+    transition: filter 0.3s ease;
+}
+
+#back-to-chats:hover #back-icon {
+    filter: invert(100%) sepia(30%) saturate(200%) hue-rotate(0deg) brightness(120%) contrast(100%);
+}
+
+/* Texto "Chats" */
+#back-to-chats span {
+    font-size: 16px;
+    font-weight: bold;
+    color: inherit; /* Hereda el color del contenedor */
+}
+
+#back-friend {
+    color: white;
 }
 
 /* Ajustes para móviles */
