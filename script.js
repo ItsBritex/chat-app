@@ -50,18 +50,19 @@ const firebaseConfig = {
   // Función para buscar amigos
   function searchFriends() {
       const searchTerm = friendSearch.value.trim().toLowerCase();
+      friendList.innerHTML = '';
+  
       if (searchTerm.length === 0) {
-          friendList.innerHTML = '';
           return;
       }
   
       db.collection('users')
-          .where('nameLower', '>=', searchTerm)
-          .where('nameLower', '<=', searchTerm + '\uf8ff')
+          .orderBy('nameLower')
+          .startAt(searchTerm)
+          .endAt(searchTerm + '\uf8ff')
           .limit(10)
           .get()
           .then((snapshot) => {
-              friendList.innerHTML = '';
               snapshot.forEach((doc) => {
                   const userData = doc.data();
                   if (doc.id !== currentUser.uid) {

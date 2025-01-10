@@ -38,11 +38,14 @@ const firebaseConfig = {
       if (messageText && currentChat && currentUser) {
           db.collection('messages').add({
               sender: currentUser.uid,
+              receiver: currentChat.id,
               text: messageText,
-              participants: [currentUser.uid, currentChat.id],
               timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(() => {
+              messageInput.value = '';
+          }).catch(error => {
+              console.error("Error al enviar el mensaje:", error);
           });
-          messageInput.value = '';
       }
   }
   
@@ -60,17 +63,17 @@ const firebaseConfig = {
   function loadMessages() {
       if (currentUser && currentChat) {
           db.collection('messages')
-              .where('participants', 'array-contains', currentUser.uid)
+              .where('sender', 'in', [currentUser.uid, currentChat.id])
+              .where('receiver', 'in', [currentUser.uid, currentChat.id])
               .orderBy('timestamp')
               .onSnapshot((snapshot) => {
                   snapshot.docChanges().forEach((change) => {
                       if (change.type === 'added') {
-                          const message = change.doc.data();
-                          if (message.participants.includes(currentChat.id)) {
-                              displayMessage(message);
-                          }
+                          displayMessage(change.doc.data());
                       }
                   });
+              }, (error) => {
+                  console.error("Error al cargar los mensajes:", error);
               });
       }
   }
