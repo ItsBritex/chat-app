@@ -3,35 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat App</title>
+    <title>Minimalist Chat App</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Firebase SDKs -->
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Minimalist Chat</h1>
+        </header>
+        <main>
+            <div id="auth-section">
+                <button id="login-button">Login with Google</button>
+                <button id="logout-button" style="display: none;">Logout</button>
+            </div>
+            <div id="user-section" style="display: none;">
+                <p>Welcome, <span id="user-name"></span></p>
+                <input type="text" id="friend-search" placeholder="Search friends by name">
+                <ul id="friend-list"></ul>
+            </div>
+            <div id="chat-section" style="display: none;">
+                <h2>Chat with <span id="chat-friend-name"></span></h2>
+                <div id="chat-messages"></div>
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+        </main>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-</head>
-<body>
-    <h1>Chat App</h1>
-    <div id="auth">
-        <button id="login">Iniciar sesión con Google</button>
-        <button id="logout" style="display: none;">Cerrar sesión</button>
-    </div>
-    <div id="profile" style="display: none;">
-        <p>ID Actual: <span id="user-id">N/A</span></p>
-        <input type="text" id="new-id" placeholder="Nuevo ID">
-        <button id="change-id">Cambiar ID</button>
-    </div>
-    <div id="search-section" style="display: none;">
-        <input type="text" id="search-bar" placeholder="Buscar amigo por nombre">
-        <button id="search">Buscar</button>
-        <ul id="results"></ul>
-    </div>
-    <div id="chat-section" style="display: none;">
-        <h2>Chat con: <span id="chat-user">N/A</span></h2>
-        <div id="chat-messages"></div>
-        <input type="text" id="message-input" placeholder="Escribe tu mensaje">
-        <button id="send-message">Enviar</button>
-    </div>
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
+
