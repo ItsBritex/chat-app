@@ -38,6 +38,13 @@ h2 {
     margin-left: 10px;
 }
 
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #07090B;
+}
+
 #chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -99,16 +106,17 @@ h2 {
     justify-content: center;
 }
 
-#add-button {
-    color: white;
-}
-
 #send-button {
     color: #07090B;
     background-color: #636366;
     border-radius: 50%;
     width: 32px;
     height: 32px;
+    transition: background-color 0.3s ease;
+}
+
+#send-button.has-text {
+    background-color: white;
 }
 
 #add-button .material-symbols-outlined,
@@ -153,8 +161,11 @@ h2 {
         font-size: 17px;
     }
 
+    #chat-messages {
+        height: calc(100vh - 200px); /* Adjust this value as needed */
+    }
+
     .chat-warning {
         font-size: 11px;
     }
 }
-

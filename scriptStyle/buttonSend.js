@@ -3,12 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('send-button');
     const messageForm = document.getElementById('message-form');
 
-    // Mostrar/ocultar botón de enviar según el contenido del input
     messageInput.addEventListener('input', function() {
         if (this.value.trim() !== '') {
-            sendButton.classList.add('visible');
+            sendButton.classList.add('has-text');
         } else {
-            sendButton.classList.remove('visible');
+            sendButton.classList.remove('has-text');
         }
     });
 
@@ -18,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (messageInput.value.trim() !== '') {
             // Aquí iría la lógica para enviar el mensaje
             messageInput.value = '';
-            sendButton.classList.remove('visible');
+            sendButton.classList.remove('has-text');
         }
     });
 });
+
