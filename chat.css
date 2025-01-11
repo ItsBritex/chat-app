@@ -162,7 +162,7 @@ h2 {
     }
 
     #chat-messages {
-        height: calc(100vh - 200px); /* Adjust this value as needed */
+        height: calc(100vh - 400px); /* Adjust this value as needed */
     }
 
     .chat-warning {
