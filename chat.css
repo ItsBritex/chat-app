@@ -55,6 +55,7 @@ h2 {
     align-items: center;
     gap: 12px;
     margin-bottom: 24px;
+    flex-direction: column;
 }
 
 #add-button {
@@ -77,8 +78,6 @@ h2 {
     flex-grow: 1;
     align-items: center;
     gap: 8px;
-    background-color: #2C2C2E;
-    border-radius: 20px;
     padding: 6px 6px 6px 16px;
 }
 
@@ -102,8 +101,7 @@ h2 {
 #send-button {
     opacity: 0;
     visibility: hidden;
-    background: none;
-    border: none;
+    border-radius: 100%;
     background-color: #757b7b;
     color: #000303;
     width: 32px;
