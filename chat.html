@@ -33,6 +33,27 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script>
+                const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const chatMessages = document.getElementById('chat-messages');
+
+        messageInput.addEventListener('input', () => {
+            if (messageInput.value.trim() !== '') {
+                sendButton.style.display = 'block';
+                messageInput.style.flex = '0.8'; // Reduce el tamaño del input
+            } else {
+                sendButton.style.display = 'none';
+                messageInput.style.flex = '1'; // Restaura el tamaño original
+            }
+        });
+
+        // Scroll automático al final del chat
+        chatMessages.addEventListener('DOMNodeInserted', () => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+    </script>
     <script src="chat.js"></script>
 </body>
 </html>

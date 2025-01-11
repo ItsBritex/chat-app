@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow: hidden; /* Evita scroll innecesario */
+    overflow: hidden; /* Evita scroll externo */
 }
 
 /* Cabecera del chat */
@@ -32,8 +32,8 @@
 }
 
 #back-icon {
-    width: 20px;
-    height: 20px;
+    font-size: 24px;
+    color: var(--secondary);
 }
 
 #friend-info {
@@ -56,28 +56,27 @@
     color: var(--text-color);
 }
 
-#options-icon {
-    width: 20px;
-    height: 20px;
+.material-symbols-outlined {
+    font-size: 24px;
+    color: var(--secondary);
     cursor: pointer;
-    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
-    transition: filter 0.3s ease;
+    transition: color 0.3s ease;
 }
 
-#options-icon:hover {
-    filter: invert(100%) sepia(30%) saturate(200%) hue-rotate(0deg) brightness(120%) contrast(100%);
+.material-symbols-outlined:hover {
+    color: var(--secondary-hover);
 }
 
 /* Mensajes del chat */
 #chat-messages {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Scroll interno */
     padding: 20px;
     color: var(--text-color);
-    background: none; /* Sin fondo */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    background: none; /* Sin fondo */
 }
 
 /* Formulario */
@@ -119,7 +118,13 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    display: none; /* Oculto por defecto */
     transition: opacity 0.3s ease; /* Animación de aparición */
+}
+
+#send-button span {
+    font-size: 20px;
+    color: white;
 }
 
 #send-button:hover {
@@ -134,11 +139,6 @@
 
     #friend-name {
         font-size: 14px;
-    }
-
-    #options-icon {
-        width: 18px;
-        height: 18px;
     }
 
     #message-form {

@@ -104,3 +104,6 @@ input[type="text"] {
     flex-grow: 1;
 }
 
+#user-section {
+    color: white;
+}
