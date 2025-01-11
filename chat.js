@@ -21,7 +21,6 @@ const friendName = document.getElementById('friend-name');
 const chatMessages = document.getElementById('chat-messages');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
-const sendButton = document.getElementById('send-button');
 const backButton = document.getElementById('back-to-chats');
 
 // Variables globales
@@ -30,17 +29,6 @@ let currentChat = null;
 
 // Listener para regresar a la página de chats
 backButton.addEventListener('click', () => window.location.href = 'index.html');
-
-// Mostrar el botón de enviar cuando hay texto en el input
-messageInput.addEventListener('input', () => {
-    if (messageInput.value.trim() !== '') {
-        sendButton.style.display = 'flex';
-        messageInput.style.flex = '0.8'; // Reduce ligeramente el tamaño del input
-    } else {
-        sendButton.style.display = 'none';
-        messageInput.style.flex = '1'; // Restaura el tamaño original
-    }
-});
 
 // Función para enviar mensajes a Firebase
 function sendMessageToFirebase(messageText) {
@@ -115,7 +103,5 @@ messageForm.addEventListener('submit', (e) => {
     if (messageText) {
         sendMessageToFirebase(messageText);
         messageInput.value = ''; // Limpiar el input
-        sendButton.style.display = 'none'; // Ocultar el botón de enviar
-        messageInput.style.flex = '1'; // Restaura el tamaño del input
     }
 });

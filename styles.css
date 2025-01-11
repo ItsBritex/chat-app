@@ -58,6 +58,7 @@ input[type="text"] {
 }
 
 #friend-list li {
+    color: #000;
     cursor: pointer;
     padding: 10px;
     background-color: #f4f4f4;
