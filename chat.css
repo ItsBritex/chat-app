@@ -119,6 +119,7 @@ body {
 }
 
 #send-button {
+    color: white;
     display: none;
     background-color: var(--secondary);
     color: var(--text-color);

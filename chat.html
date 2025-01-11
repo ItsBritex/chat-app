@@ -32,36 +32,5 @@
             </button>
         </form>
     </div>
-
-    <script>
-        const messageInput = document.getElementById('message-input');
-        const sendButton = document.getElementById('send-button');
-        const chatMessages = document.getElementById('chat-messages');
-
-        // Mostrar el botón de enviar cuando hay texto en el input
-        messageInput.addEventListener('input', () => {
-            if (messageInput.value.trim() !== '') {
-                sendButton.style.display = 'flex';
-                messageInput.style.flex = '0.8'; // Reduce ligeramente el tamaño del input
-            } else {
-                sendButton.style.display = 'none';
-                messageInput.style.flex = '1'; // Restaura el tamaño original
-            }
-        });
-
-        // Manejar el envío del mensaje
-        document.getElementById('message-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (messageInput.value.trim() !== '') {
-                const newMessage = document.createElement('div');
-                newMessage.textContent = messageInput.value.trim();
-                chatMessages.appendChild(newMessage);
-                messageInput.value = '';
-                sendButton.style.display = 'none';
-                messageInput.style.flex = '1';
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll automático
-            }
-        });
-    </script>
 </body>
 </html>
