@@ -8,6 +8,19 @@ const firebaseConfig = {
     appId: "1:991015329906:web:d0bb02133b8de1a52c62eb",
     measurementId: "G-3X6LV0DT7P"
   };
+
+// Elementos relacionados con la foto de perfil
+const profilePicture = document.getElementById('profile-picture');
+const pfpUser = document.getElementById('pfp-user');
+const uploadModal = document.getElementById('upload-modal');
+const fileInput = document.getElementById('file-input');
+const uploadFileBtn = document.getElementById('upload-file-btn');
+const closeModal = document.getElementById('close-modal');
+const modalBackdrop = document.getElementById('modal-backdrop');
+
+// Tu configuración de Cloudinary
+const cloudName = "tu-cloud-name"; 
+const uploadPreset = "tu-upload-preset";
   
   // Inicializar Firebase
   firebase.initializeApp(firebaseConfig);
@@ -180,5 +193,77 @@ auth.onAuthStateChanged((user) => {
         logoutButton.style.display = 'none';
         userSection.style.display = 'none';
         friendList.innerHTML = '';
+    }
+});
+
+
+
+// Mostrar foto de perfil del usuario autenticado
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // Mostrar la foto del usuario (de Google o de Firestore)
+        profilePicture.src = user.photoURL || './assets/default.png'; // Imagen predeterminada si no hay foto
+
+        // Si hay una URL personalizada guardada en Firestore, usar esa
+        db.collection('users').doc(user.uid).get().then((doc) => {
+            if (doc.exists && doc.data().profilePicture) {
+                profilePicture.src = doc.data().profilePicture;
+            }
+        }).catch((error) => {
+            console.error('Error al obtener la foto de perfil del usuario:', error);
+        });
+    }
+});
+
+// Abrir el modal al hacer clic en la foto de perfil
+pfpUser.addEventListener('click', () => {
+    uploadModal.style.display = 'block';
+    modalBackdrop.style.display = 'block';
+});
+
+// Cerrar el modal
+closeModal.addEventListener('click', () => {
+    uploadModal.style.display = 'none';
+    modalBackdrop.style.display = 'none';
+});
+
+// Subir una nueva foto de perfil
+uploadFileBtn.addEventListener('click', async () => {
+    const file = fileInput.files[0];
+    if (!file) {
+        alert('Por favor selecciona un archivo.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', uploadPreset);
+
+    try {
+        // Subir imagen a Cloudinary
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await response.json();
+
+        // Actualizar la foto de perfil en la página
+        profilePicture.src = data.secure_url;
+
+        // Guardar la nueva URL en Firestore
+        const user = auth.currentUser;
+        if (user) {
+            await db.collection('users').doc(user.uid).update({
+                profilePicture: data.secure_url,
+            });
+            alert('Foto de perfil actualizada.');
+        }
+
+        // Cerrar el modal
+        uploadModal.style.display = 'none';
+        modalBackdrop.style.display = 'none';
+    } catch (error) {
+        console.error('Error al subir la imagen:', error);
+        alert('Error al subir la imagen. Inténtalo nuevamente.');
     }
 });

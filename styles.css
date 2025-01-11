@@ -109,3 +109,20 @@ input[type="text"] {
 #user-section {
     color: white;
 }
+
+#pfp-user {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc;
+}
+
+#pfp-user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
