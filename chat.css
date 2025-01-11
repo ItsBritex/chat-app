@@ -53,40 +53,20 @@ h2 {
     background-color: #15151F;
     border-radius: 25px;
     display: flex;
-    align-items: center;
-    padding: 4px;
+    flex-direction: column;
     margin-bottom: 24px;
-}
-
-.buttons-options {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding-right: 8px;
-}
-
-#add-button {
-    background: none;
-    border: none;
-    color: #636366;
-    padding: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #message-form {
     display: flex;
     flex-grow: 1;
     align-items: center;
-    gap: 8px;
-    padding: 6px 6px 6px 16px;
+    padding: 6px 16px;
 }
 
 #message-input {
     flex-grow: 1;
-    padding: 8px 0;
+    padding: 12px 0;
     border: none;
     background: none;
     color: #fff;
@@ -101,28 +81,37 @@ h2 {
     outline: none;
 }
 
-#send-button {
-    opacity: 0;
-    visibility: hidden;
+.buttons-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+}
+
+#add-button, #send-button {
+    background: none;
     border: none;
-    border-radius: 50%;
-    background-color: #636366;
-    color: #07090B;
-    width: 32px;
-    height: 32px;
-    padding: 0;
+    color: #636366;
+    padding: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-#send-button.visible {
-    opacity: 1;
-    visibility: visible;
+#add-button {
+    color: white;
 }
 
+#send-button {
+    color: #07090B;
+    background-color: #636366;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+#add-button .material-symbols-outlined,
 #send-button .material-symbols-outlined {
     font-size: 20px;
 }
@@ -160,10 +149,6 @@ h2 {
         margin-bottom: 28px;
     }
 
-    #message-form {
-        padding: 6px 6px 6px 16px;
-    }
-
     #message-input {
         font-size: 17px;
     }
@@ -172,3 +157,4 @@ h2 {
         font-size: 11px;
     }
 }
+
