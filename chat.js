@@ -23,6 +23,9 @@ const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 const backButton = document.getElementById('back-button');
+const userProfilePicture = document.getElementById('user-profile-picture');
+const cloudinaryBaseURL = "https://res.cloudinary.com/dbdrdkngr/image/upload/"; // Cambia "tu-cloud-name" por el nombre de tu cuenta en Cloudinary
+
 
 // Variables globales
 let currentUser = null;
@@ -41,6 +44,52 @@ function toggleSendButtonColor() {
     } else {
         sendButton.classList.remove('has-text');
     }
+}
+
+function loadFriendProfile() {
+    db.collection('users').doc(currentChat.id).get().then(doc => {
+        if (doc.exists) {
+            const friendData = doc.data();
+            if (friendData.cloudinaryPublicId) {
+                userProfilePicture.src = `${cloudinaryBaseURL}${friendData.cloudinaryPublicId}`; // Usar la imagen de Cloudinary
+            } else {
+                userProfilePicture.src = friendData.photoURL || 'assets/default.jpeg'; // Alternativa de Firebase o imagen predeterminada
+            }
+
+            friendName.textContent = `@${friendData.username}`; // Nombre del amigo
+        } else {
+            console.error('No se encontró el perfil del amigo en Firestore');
+        }
+    }).catch(error => {
+        console.error("Error al cargar el perfil del amigo:", error);
+    });
+}
+
+function updateProfilePicture(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "tu-upload-preset"); // Cambia por tu preset de Cloudinary
+
+    fetch("https://api.cloudinary.com/v1_1/dbdrdkngr/image/upload", { // Cambia "tu-cloud-name"
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.secure_url) {
+            db.collection('users').doc(auth.currentUser.uid).update({
+                cloudinaryPublicId: data.public_id, // Guardar el ID de Cloudinary en Firestore
+                photoURL: data.secure_url // URL directa para Firebase
+            }).then(() => {
+                console.log("Foto de perfil actualizada en Firestore");
+            }).catch(error => {
+                console.error("Error al actualizar Firestore:", error);
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error al subir a Cloudinary:", error);
+    });
 }
 
 // Función para enviar mensajes
@@ -104,20 +153,28 @@ function loadMessages() {
     }
 }
 
+
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log('Usuario autenticado:', user.uid);
         currentUser = user;
-        
-        // Actualizar la foto de perfil
-        const userProfilePicture = document.getElementById('user-profile-picture');
-        userProfilePicture.src = user.photoURL || 'assets/default.jpeg'; // Si no tiene foto, usa la predeterminada
-        
+            // Mostrar la foto de perfil del usuario desde Cloudinary
+            db.collection('users').doc(currentUser.uid).get().then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    if (userData.cloudinaryPublicId) {
+                        userProfilePicture.src = `${cloudinaryBaseURL}${userData.cloudinaryPublicId}`;
+                    } else {
+                        userProfilePicture.src = userData.photoURL || 'assets/default.jpeg';
+                    }
+                }
+            });
         // Obtener información del amigo del almacenamiento local
         const storedFriend = JSON.parse(localStorage.getItem('currentChatFriend'));
         if (storedFriend) {
             console.log('Amigo del chat:', storedFriend);
             currentChat = storedFriend;
+            loadFriendProfile(); // Cargar la foto y datos del amigo
             friendName.textContent = `@${currentChat.username}`;
             loadMessages();
         } else {
