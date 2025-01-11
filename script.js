@@ -19,7 +19,7 @@ const closeModal = document.getElementById('close-modal');
 const modalBackdrop = document.getElementById('modal-backdrop');
 
 // Tu configuración de Cloudinary
-const cloudName = "tu-cloud-name"; 
+const cloudName = "dbdrdkngr"; 
 const uploadPreset = "tu-upload-preset";
   
   // Inicializar Firebase

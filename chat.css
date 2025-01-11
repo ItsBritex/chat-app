@@ -18,7 +18,7 @@ body {
     padding: 10px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    justify-content: space-around;
 }
 
 #back-button {
@@ -28,6 +28,8 @@ body {
     font-size: 24px;
     cursor: pointer;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
 }
 
 h2 {
@@ -162,7 +164,7 @@ h2 {
     }
 
     #chat-messages {
-        height: calc(100vh - 400px); /* Adjust this value as needed */
+        height: calc(100vh - 600px); /* Adjust this value as needed */
     }
 
     .chat-warning {
