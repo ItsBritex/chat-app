@@ -20,7 +20,7 @@ const modalBackdrop = document.getElementById('modal-backdrop');
 
 // Tu configuración de Cloudinary
 const cloudName = "dbdrdkngr"; 
-const uploadPreset = "tu-upload-preset";
+const uploadPreset = "ml_default";
   
   // Inicializar Firebase
   firebase.initializeApp(firebaseConfig);
