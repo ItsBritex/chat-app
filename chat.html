@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=send" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="chat.css">
-    <title></title>
+    <title>Direct Messages</title>
 </head>
 <body>
     <div id="chat-container">
@@ -23,37 +23,45 @@
         </div>
         <div id="chat-messages"></div>
         <form id="message-form">
-            <button id="add-button" type="button">+</button>
+            <button id="add-button" type="button">
+                <span class="material-symbols-outlined">add</span>
+            </button>
             <input id="message-input" type="text" placeholder="Escribe un mensaje...">
-            <button id="send-button" type="submit" style="display: none;"><span class="material-symbols-outlined">send</span></button>
+            <button id="send-button" type="submit">
+                <span class="material-symbols-outlined">send</span>
+            </button>
         </form>
     </div>
-    
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script>
-                const messageInput = document.getElementById('message-input');
+        const messageInput = document.getElementById('message-input');
         const sendButton = document.getElementById('send-button');
         const chatMessages = document.getElementById('chat-messages');
 
+        // Mostrar el botón de enviar cuando hay texto en el input
         messageInput.addEventListener('input', () => {
             if (messageInput.value.trim() !== '') {
-                sendButton.style.display = 'block';
-                messageInput.style.flex = '0.8'; // Reduce el tamaño del input
+                sendButton.style.display = 'flex';
+                messageInput.style.flex = '0.8'; // Reduce ligeramente el tamaño del input
             } else {
                 sendButton.style.display = 'none';
                 messageInput.style.flex = '1'; // Restaura el tamaño original
             }
         });
 
-        // Scroll automático al final del chat
-        chatMessages.addEventListener('DOMNodeInserted', () => {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+        // Manejar el envío del mensaje
+        document.getElementById('message-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (messageInput.value.trim() !== '') {
+                const newMessage = document.createElement('div');
+                newMessage.textContent = messageInput.value.trim();
+                chatMessages.appendChild(newMessage);
+                messageInput.value = '';
+                sendButton.style.display = 'none';
+                messageInput.style.flex = '1';
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll automático
+            }
         });
-
     </script>
-    <script src="chat.js"></script>
 </body>
 </html>
