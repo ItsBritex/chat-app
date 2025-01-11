@@ -104,11 +104,15 @@ function loadMessages() {
     }
 }
 
-// Listener para cambios en el estado de autenticación
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log('Usuario autenticado:', user.uid);
         currentUser = user;
+        
+        // Actualizar la foto de perfil
+        const userProfilePicture = document.getElementById('user-profile-picture');
+        userProfilePicture.src = user.photoURL || 'assets/default.jpeg'; // Si no tiene foto, usa la predeterminada
+        
         // Obtener información del amigo del almacenamiento local
         const storedFriend = JSON.parse(localStorage.getItem('currentChatFriend'));
         if (storedFriend) {
@@ -118,15 +122,14 @@ auth.onAuthStateChanged((user) => {
             loadMessages();
         } else {
             console.error('No hay información del amigo en el almacenamiento local');
-            // Si no hay información del amigo, volver a la página principal
             window.location.href = 'index.html';
         }
     } else {
         console.log('No hay usuario autenticado');
-        // Si no hay usuario autenticado, volver a la página principal
         window.location.href = 'index.html';
     }
 });
+
 
 // Verificar el estado de autenticación al cargar la página
 auth.onAuthStateChanged((user) => {
